@@ -1,0 +1,30 @@
+script(type="text/ng-template", id="views/list")
+	.container#list-view
+		.row.clearfix
+			.col-md-12.column
+				.panel.panel-primary
+					include header.jade
+					ul.list-group
+					li.list-group-item(ng-repeat="post in data.list")
+						.up-vote-icon
+							a(href="javascript:void(0)", ng-click="upVotePost(post)")
+								small &#9650;
+						.post(ng-if="data.type != 'reply'")
+							a.list-group-item-heading(href="{{post.url || '#/post/' + post.id}}") {{post.title}}
+							|  {{post.src | brackets}}
+							.list-group-item-text
+								| {{post.vcnt || 0}} points by 
+								a(href="#/profile/{{post.authorId}}") {{post.author}}
+								|  | {{post.ccnt || 0}} 
+								a(href="#/post/{{post.id}}") comments
+						.post(ng-if="data.type == 'reply'")
+							a.list-group-item-heading(href="{{post.url || '#/post/' + post.id}}") {{post.title}}
+							|  by 
+							a(href="#/profile/{{post.authorId}}") {{post.author}}
+							.list-group-item-text {{post.text}}
+					li.list-group-item(ng-if="data.page < 5")
+						.list-group-item-text
+							a(href="javascript:void(0)", ng-click="nextPage()") More
+					.panel-footer
+						#last-updated
+							| Last updated at {{data.updateDt | date:"hh:mm"}} 

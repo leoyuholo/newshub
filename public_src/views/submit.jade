@@ -1,0 +1,33 @@
+script(type="text/ng-template", id="views/submit")
+	.container#submit-view
+		.row.clearfix
+			.col-md-12.column
+				.panel.panel-primary
+					include header.jade
+					.panel-body
+						.col-md-6.col-md-offset-2
+						form.form-horizontal(role="form")
+							.col-lg-8
+								.form-group
+									label.col-md-2(for="inputTitle") title
+									.col-md-9
+										input#inputTitle.form-control(type="text", ng-model="title")
+								.form-group
+									.col-md-9
+										.radio-inline
+											label
+												input(type="radio", name="urlTextToggle", ng-model="urlTextToggle", value="url")
+												|  url
+										.radio-inline
+											label
+												input(type="radio", name="urlTextToggle", ng-model="urlTextToggle", value="text")
+												|  text
+								.form-group(ng-show="urlTextToggle === 'url'")
+									.col-md-9
+										input#inputUrl.form-control(type="text", ng-model="url")
+								.form-group(ng-show="urlTextToggle === 'text'")
+									.col-md-9
+										textarea#inputText.form-control(rows="6", ng-model="text")
+								.form-group
+									.col-md-offset-2.col-md-12
+										button.btn.btn-default(type="submit", ng-click="submitPost(title, url, text)") Submit

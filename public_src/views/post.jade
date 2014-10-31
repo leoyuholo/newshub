@@ -1,0 +1,45 @@
+script(type="text/ng-template", id="views/reply/tree")
+	div.up-vote-icon
+		a(href="javascript:void(0)", ng-click="upVotePost(reply)")
+			small &#9650;
+	div.post-reply
+		| {{reply.author}} | 
+		a(href="#/post/{{reply.id}}") Reply
+		div.post-reply-text {{reply.text}}
+	ul.post-reply-list(ng-if="reply.children")
+		li.post-reply(ng-repeat="(key, reply) in reply.children", ng-include="'views/reply/tree'")
+
+script(type="text/ng-template", id="views/post")
+	.container#post-view
+		.row.clearfix
+			.col-md-12.column
+				.panel.panel-primary
+					include header.jade
+					.panel-body
+						div.up-vote-icon
+							a(href="javascript:void(0)", ng-click="upVotePost(post)")
+								small &#9650;
+						div.post
+							a(href="{{post.url}}") {{post.title}}
+							|  {{post.src | brackets}}
+							div
+								| {{post.vcnt || 0}} points by 
+								a(href="#/profile/post.authorId") {{post.author}}
+								|  | {{post.ccnt || 0}} comments
+							div.post-text(ng-if="post.text")
+								| {{post.text}}
+							div(ng-if="post.rootId != post.id")
+								a(href="#/post/{{post.rootId}}") Root
+								|  | 
+								a(href="#/post/{{post.parentId}}") Parent
+						form(role="form")
+							.form-group
+								.row
+									.col-xs-12
+										textarea#inputReply.form-control(rows="6", columns="6", ng-model="replyText")
+								button.btn.btn-default(type="submit", ng-click="submitReply(post.rootId, post.id, post.title, replyText)") Add reply
+					ul.post-reply-list(ng-repeat="(key, reply) in post.children")
+						li(ng-include="'views/reply/tree'")
+					.panel-footer
+						#last-updated
+							| Last updated at {{post.updateDt | date:"hh:mm"}} 

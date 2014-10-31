@@ -1,0 +1,14 @@
+.panel-heading
+	a.logo(href="#/") NewsHub
+	|  | 
+	a(href="#/?sort=new") new
+	|  | 
+	a(href="#/?sort=reply") comments
+	|  | 
+	a(href="#/submit") Submit
+	.l-align-right(ng-if="user.id")
+		a(href="#/profile/{{user.id}}") {{ user.name }}
+		|  | 
+		a(href="javascript: void(0)", ng-click="logout()") Sign out
+	.l-align-right(ng-if="!user.id")
+		a(href="#/login") Sign in

@@ -1,0 +1,40 @@
+script(type="text/ng-template", id="views/login")
+	.container#login-view
+		.row.clearfix
+			.col-md-12.column
+				.page-header
+					h1
+						a(href="#/").logo NewsHub
+						| 
+						small Login
+				form.form-horizontal(role="form")
+					.form-group
+						label.col-sm-2.control-label(for="inputEmail") Email
+						.col-sm-10
+							input#inputEmail.form-control(type="email", ng-model="email")
+					.form-group
+						label.col-sm-2.control-label(for="inputPassword") Password
+						.col-sm-10
+							input#inputPassword.form-control(type="password", ng-model="password")
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							button.btn.btn-default(type="submit", ng-click="submitLogin(email, password)") Sign in
+				.page-header
+					h1
+						small Register
+				form.form-horizontal(role="form")
+					.form-group
+						label.col-sm-2.control-label(for="inputEmail") Email
+						.col-sm-10
+							input#inputEmail.form-control(type="email", ng-model="email")
+					.form-group
+						label.col-sm-2.control-label(for="inputUsername") User Name
+						.col-sm-10
+							input#inputUsername.form-control(type="text", ng-model="username")
+					.form-group
+						label.col-sm-2.control-label(for="inputPassword") Password
+						.col-sm-10
+							input#inputPassword.form-control(type="password", ng-model="password")
+					.form-group
+						.col-sm-offset-2.col-sm-10
+							button.btn.btn-default(type="submit", ng-click="submitSignUp(email, username, password)") Sign Up
