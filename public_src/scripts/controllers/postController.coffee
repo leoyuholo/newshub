@@ -2,13 +2,17 @@ app = angular.module 'newshub'
 
 app.controller('PostController', ($scope, $routeParams, $rootScope, postService, alertService) ->
 
+	sortReplies = (post) ->
+		replies = []
+		replies.push reply for id, reply of post.children
+		replies = replies.map(sortReplies)
+		post.children = replies.sort (a, b) ->
+			(a.vcnt || 0) < (b.vcnt || 0)
+		return post
+
 	getPost = (done) ->
 		postService.getPost($routeParams.id, (err, data) ->
-			replies = []
-			replies.push v for k, v of data.children
-			data.children = replies.sort (a, b) ->
-				(a.vcnt || 0) < (b.vcnt || 0)
-			$scope.post = data
+			$scope.post = sortReplies data
 			callFn done, err, data
 		)
 
