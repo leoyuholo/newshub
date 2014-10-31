@@ -72,6 +72,7 @@ refreshPosts = (posts, done) ->
 			if !post.parentId
 				# vote
 				refreshPost post.id, null, (err, post) ->
+					return done err, post if post.id != post.parentId
 					postStore.updateScore post, done
 			else if post.parentId != post.id
 				# propagate
