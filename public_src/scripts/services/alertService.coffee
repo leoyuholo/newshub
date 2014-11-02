@@ -13,9 +13,10 @@ app.service('alertService', ($rootScope, $timeout) ->
 		time = time || defaultTimeout
 		if time > 0
 			$timeout.cancel timeout[target]
-			timeout[target] = $timeout(( () ->
+			timeout[target] = $timeout ( () ->
 				$rootScope.alerts[target] = ''
-			), time).then done, done
+			), time
+			timeout[target].finally done
 		else
 			callFn done, null
 

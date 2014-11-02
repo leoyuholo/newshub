@@ -478,9 +478,10 @@ a.logo:hover {
       time = time || defaultTimeout;
       if (time > 0) {
         $timeout.cancel(timeout[target]);
-        return timeout[target] = $timeout((function() {
+        timeout[target] = $timeout((function() {
           return $rootScope.alerts[target] = '';
-        }), time).then(done, done);
+        }), time);
+        return timeout[target]["finally"](done);
       } else {
         return callFn(done, null);
       }
