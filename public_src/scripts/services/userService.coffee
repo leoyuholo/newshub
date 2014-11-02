@@ -12,11 +12,13 @@ app.service('userService', ($http, $rootScope, urlService) ->
 			name: uname
 
 	userService.getUser = () ->
-		uid = localStorage.getItem('uid')
-		if uid
+		if $rootScope.user
+			user = $rootScope.user
+		else if uid = localStorage.getItem('uid')
 			user =
 				id: uid
 				name: localStorage.getItem('uname')
+			$rootScope.user = user
 		
 		return user
 

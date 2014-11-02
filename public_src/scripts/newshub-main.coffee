@@ -37,8 +37,6 @@ app.run( ($rootScope, $location, userService, alertService) ->
 	$rootScope.$on '$routeChangeSuccess', () ->
 		alertService.clear()
 	user = userService.getUser()
-	if user
-		userService.setUser(user.id, user.name)
 	$rootScope.logout = () ->
 		userService.logout (err, date) ->
 			alertService.success('Signed out successfully. Redirecting...', 2000, () ->
