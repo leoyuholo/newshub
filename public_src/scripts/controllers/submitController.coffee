@@ -11,10 +11,10 @@ app.controller('SubmitController', ($scope, $location, userService, postService,
 
 	$scope.submitPost = (title, url, text) ->
 
-		if "url" == $scope.urlTextToggle
-			text = ""
-		else
+		if "text" == $scope.urlTextToggle
 			url = ""
+		else
+			text = ""
 
 		postService.create(title, url, text, (err, data) ->
 			if err

@@ -12,12 +12,22 @@ commonCb = (res, next) ->
 
 router = $.express.Router()
 
+urlRegex = /^https?:\/\/(?:www\.)?([\w]+\.[\w.]+)[^\s]*$/i
+
 router.post '/create', (req, res, next) ->
 	title = req.param 'title'
 	url = req.param 'url'
+	src = ''
 	text = req.param 'text' if !url
 
-	postService.create title, url, text, req.user.id, req.user.username, commonCb(res, next)
+	if url
+		urlRegexResult = urlRegex.exec(url)
+		if !urlRegexResult || !urlRegexResult[1]
+			return next new Error 'Invalid url.'
+		else
+			src = urlRegexResult[1]
+
+	postService.create title, url, src, text, req.user.id, req.user.username, commonCb(res, next)
 
 router.post '/reply', (req, res, next) ->
 	rootId = req.param 'rootId'

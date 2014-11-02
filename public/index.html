@@ -231,10 +231,10 @@ a.logo:hover {
     }
     $scope.urlTextToggle = "url";
     return $scope.submitPost = function(title, url, text) {
-      if ("url" === $scope.urlTextToggle) {
-        text = "";
-      } else {
+      if ("text" === $scope.urlTextToggle) {
         url = "";
+      } else {
+        text = "";
       }
       return postService.create(title, url, text, function(err, data) {
         if (err) {
@@ -396,10 +396,20 @@ a.logo:hover {
   app = angular.module('newshub');
 
   app.service('postService', function($http, urlService) {
-    var postService;
+    var postService, urlRegex;
     postService = {};
+    urlRegex = /^https?:\/\/(?:www\.)?([\w]+\.[\w.]+)[^\s]*$/i;
     postService.create = function(title, url, text, done) {
-      var payload;
+      var payload, urlRegexResult;
+      if (url) {
+        if ('http' !== url.substr(0, 4)) {
+          url = "http://" + url;
+        }
+        urlRegexResult = urlRegex.exec(url);
+        if (!urlRegexResult || !urlRegexResult[1]) {
+          return done(new Error('Invalid url.'));
+        }
+      }
       payload = {
         title: title,
         url: url,

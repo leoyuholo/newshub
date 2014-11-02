@@ -4,7 +4,16 @@ app.service('postService', ($http, urlService) ->
 
 	postService = {}
 
+	urlRegex = /^https?:\/\/(?:www\.)?([\w]+\.[\w.]+)[^\s]*$/i
+
 	postService.create = (title, url, text, done) ->
+
+		if url
+			url = "http://#{url}" if 'http' != url.substr(0, 4)
+			urlRegexResult = urlRegex.exec(url)
+			if !urlRegexResult || !urlRegexResult[1]
+				return done new Error 'Invalid url.'
+
 		payload =
 			title: title
 			url: url

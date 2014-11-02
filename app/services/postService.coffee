@@ -7,13 +7,14 @@ postStore = $.stores.postStore
 staticStore = $.stores.staticStore
 module.exports = postService = {}
 
-postService.create = (title, url, text, userId, username, done) ->
+postService.create = (title, url, src, text, userId, username, done) ->
 	job =
 		dt: Date.now()
 		authorId: userId
 		author: username
 		title: title
 		url: url
+		src: src
 		text: text
 
 	jobStore.pushPostJob job, (err) ->

@@ -27,6 +27,7 @@ processPostJobs = (jobs, done) ->
 				authorId: job.authorId
 				title: job.title
 				url: job.url
+				src: job.src
 				text: job.text
 			postStore.createPost post, done
 	), (err, posts) ->
