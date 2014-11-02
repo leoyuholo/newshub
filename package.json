@@ -13,6 +13,7 @@
 		"redis": "*",
 		"underscore": "*",
 		"async": "*",
-		"connect-redis": "*"
+		"connect-redis": "*",
+		"fs-extra": "*"
 	}
 }
