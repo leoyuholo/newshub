@@ -61,13 +61,14 @@ postStore.getTopPostList = _.partial getPostList, zScoreKey
 
 postStore.expireFromList = (listMaxLen, listMinScore, done) ->
 	redisClient.multi()
+		.zrangebyrank(zNewKey, '-inf', listMaxLen - 1)
 		.zrangebyrank(zReplyKey, listMaxLen, '+inf')
 		.zrangebyscore(zScoreKey, '-inf', listMinScore)
 		.zremrangebyrank(zReplyKey, listMaxLen, '+inf')
 		.zremrangebyrank(zNewKey, listMaxLen, '+inf')
 		.zremrangebyscore(zScoreKey, '-inf', listMinScore)
 		.exec( (err, replies) ->
-			ids = _.union(replies[0], replies[1])
+			ids = _.union(_.different(replies[2], replies[0]), replies[1])
 			redisClient.hdel [hPostKey].concat(ids), done
 		)
 
