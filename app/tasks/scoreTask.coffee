@@ -14,6 +14,6 @@ run = () ->
 			), (err) ->
 				console.log('scoreTask err:', err) if err
 		)
-	), $.config.refreshScoreInterval
+	), 30000
 
 run()

@@ -91,13 +91,16 @@ refreshAllPosts = (done) ->
 		_.partial async.waterfall, [jobStore.popAllPostJobs, processPostJobs]
 		_.partial async.waterfall, [jobStore.popAllVoteJobs, processVoteJobs]
 	], (err, results) ->
-		refreshPosts results[0].concat(results[1]), done
+		refreshPosts results[0].concat(results[1]), (err) ->
+			if results[0].length > 0 || results[1].length > 0
+				$.dirtyBit = 1
+			done err
 
 run = () ->
 	setInterval (->
 		refreshAllPosts( (err) ->
 			console.log('postTask, err:', err) if err
 		)
-	), $.config.refreshPostInterval
+	), 1000
 
 run()

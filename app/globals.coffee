@@ -1,4 +1,6 @@
 path = require 'path'
+events = require 'events'
+
 express = require 'express'
 bodyParser = require 'body-parser'
 cookieParser = require 'cookie-parser'
@@ -11,9 +13,9 @@ module.exports = $ = {}
 
 # default config
 $.config = config
+config.host = config.host || 'localhost'
 config.port = config.port || 8000
 config.sessionSecret = config.sessionSecret || 'newshub secret'
-config.refreshInterval = config.refreshInterval || 1000
 
 # dir
 $.rootdir = path.join __dirname, '../'
@@ -30,11 +32,14 @@ app.use cookieParser()
 app.use bodyParser.json()
 app.use bodyParser.urlencoded {extended:true}
 
+$.emitter = new events.EventEmitter()
+
 # initialzation sequence is important
 $.stores = include path.join(__dirname, './stores'), true
 $.services = include path.join(__dirname, './services'), true
 $.controllers = include path.join(__dirname, './controllers'), true
 $.tasks = include path.join(__dirname, './tasks'), true
+$.listeners = include path.join(__dirname, './listeners'), true
 
 $.computeScore = require './computeScore'
 

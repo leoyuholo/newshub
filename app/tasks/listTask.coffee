@@ -2,6 +2,7 @@ async = require 'async'
 _ = require 'underscore'
 
 $ = require '../globals'
+$.dirtyBit = 1
 
 refreshList = (getList, type, start, end, page, done) ->
 	getList start, end, (err, posts) ->
@@ -30,9 +31,11 @@ refreshAllLists = (done) ->
 
 run = () ->
 	setInterval (->
-		refreshAllLists( (err) ->
-			console.log('listTask, err:', err) if err
-		)
-	), $.config.refreshListInterval
+		if 1 == $.dirtyBit
+			refreshAllLists( (err) ->
+				$.dirtyBit = 0
+				console.log('listTask, err:', err) if err
+			)
+	), 1000
 
 run()
