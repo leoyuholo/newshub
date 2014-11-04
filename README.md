@@ -1,4 +1,5 @@
 #NewsHub
+[live demo](http://newshub.leoyuholo.com)
 
 example of `config.json`
 ```
@@ -8,6 +9,12 @@ example of `config.json`
 	"redis": {
 		"host": "127.0.0.1",
 		"port": 6379
+	},
+	"aws": {
+		"accessKeyId": "AKID",
+		"secretAccessKey": "SECRET",
+		"region": "ap-northeast-1",
+		"bucket": "newshub.leoyuholo.com"
 	}
 }
 ```
