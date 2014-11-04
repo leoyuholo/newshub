@@ -4,6 +4,8 @@ app.service('urlService', () ->
 
 	urlService = {}
 
+	apiPrefix = '/api'
+
 	urlService.list = (type, page) ->
 		return "/static/list/#{type}/#{if page && page > 1 then page else 'index' }.json"
 
@@ -14,22 +16,22 @@ app.service('urlService', () ->
 		return "/static/post/#{id}.json"
 
 	urlService.createPost = () ->
-		return '/api/post/create'
+		return "#{apiPrefix}/post/create"
 
 	urlService.replyPost = () ->
-		return '/api/post/reply'
+		return "#{apiPrefix}/post/reply"
 
 	urlService.votePost = () ->
-		return '/api/post/vote'
+		return "#{apiPrefix}/post/vote"
 
 	urlService.login = () ->
-		return '/api/auth/login'
+		return "#{apiPrefix}/auth/login"
 
 	urlService.signUp = () ->
-		return '/api/auth/signup'
+		return "#{apiPrefix}/auth/signup"
 
 	urlService.logout = () ->
-		return '/api/auth/logout'
+		return "#{apiPrefix}/auth/logout"
 
 	return urlService
 )

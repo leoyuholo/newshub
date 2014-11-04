@@ -1,4 +1,4 @@
 node_modules
-public/static
-config.json
-sftp-config.json
+public
+config*.json
+sftp-config*.json
