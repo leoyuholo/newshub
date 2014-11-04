@@ -6,14 +6,18 @@ app.service('urlService', () ->
 
 	apiPrefix = '/api'
 
+	urlService.timestamp = (freq) ->
+		freq = freq || 3000
+		return Math.floor Date.now() / freq
+
 	urlService.list = (type, page) ->
-		return "/static/list/#{type}/#{if page && page > 1 then page else 'index' }.json"
+		return "/static/list/#{type}/#{if page && page > 1 then page else 'index' }.json?t=#{urlService.timestamp()}"
 
 	urlService.profile = (id) ->
-		return "/static/profile/#{id}.json"
+		return "/static/profile/#{id}.json?t=#{urlService.timestamp()}"
 
 	urlService.getPost = (id) ->
-		return "/static/post/#{id}.json"
+		return "/static/post/#{id}.json?t=#{urlService.timestamp()}"
 
 	urlService.createPost = () ->
 		return "#{apiPrefix}/post/create"
