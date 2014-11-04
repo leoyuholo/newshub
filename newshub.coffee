@@ -2,4 +2,4 @@ $ = require './app/globals'
 
 app = $.app
 
-app.listen $.config.port, $.config.host
+app.listen $.config.port
